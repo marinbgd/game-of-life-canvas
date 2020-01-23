@@ -18,11 +18,11 @@ export const getInitialGrid = ({rows, cols}) => {
 export const getNextGrid = grid => {
     let newGrid = []
 
-    grid.forEach( (col, colNo) => {
+    grid.forEach( (row, rowNo) => {
         const newRow = []
-        col.forEach((row, rowNo) => {
-            const cell = grid[colNo][rowNo]
-            const nearbyLivingCellCount = getNearbyLivingCellCount(grid, colNo, rowNo)
+        row.forEach((col, colNo) => {
+            const cell = grid[rowNo][colNo]
+            const nearbyLivingCellCount = getNearbyLivingCellCount(grid, rowNo, colNo)
             const newCell = getCellValue(cell, nearbyLivingCellCount)
             newRow.push(newCell)
         })
@@ -33,10 +33,9 @@ export const getNextGrid = grid => {
 }
 
 export const renderGrid = (ctx, grid, cellSize) => {
-    console.count("renderGrid");
-    grid.forEach( (col, colNo) => {
-        col.forEach( (row, rowNo) => {
-            const cell = grid[colNo][rowNo]
+    grid.forEach( (row, rowNo) => {
+        row.forEach( (col, colNo) => {
+            const cell = grid[rowNo][colNo]
 
             ctx.beginPath()
             ctx.rect(
@@ -51,18 +50,18 @@ export const renderGrid = (ctx, grid, cellSize) => {
     })
 }
 
-const getNearbyLivingCellCount = (grid, cellCol, cellRow) => {
+const getNearbyLivingCellCount = (grid, cellRow, cellCol) => {
     let livingCount = 0
 
     for (let i = -1; i < 2; i++) {
-        const col = cellCol + i
+        const row = cellRow + i
 
-        if (typeof grid[col] === 'undefined') {
+        if (!grid[row]) {
             continue
         }
 
         for (let j = -1; j < 2; j++) {
-            const row = cellRow + 1
+            const col = cellCol + j
 
             if (
                 row === cellRow
@@ -71,11 +70,7 @@ const getNearbyLivingCellCount = (grid, cellCol, cellRow) => {
                 continue
             }
 
-            if (typeof grid[col][row] === 'undefined') {
-                continue
-            }
-
-            if (grid[col][row]) {
+            if (grid[row][col]) {
                 livingCount += 1
             }
         }

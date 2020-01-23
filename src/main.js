@@ -1,6 +1,6 @@
 import CONFIG from './config'
 import { getInitialGrid, getNextGrid, renderGrid } from './grid.helper'
-import { addButtonClickHandlers } from './ui.helper'
+import { addButtonClickHandlers, CANVAS_ID } from './ui.helper'
 
 
 function init() {
@@ -8,12 +8,13 @@ function init() {
     addButtonClickHandlers({
         startCb: handleStartButtonClick,
         stopCb: handleStopButtonClick,
+        nextCb: handleNextButtonClick,
         resetCb: handleResetButtonClick,
         fpsCb: handleFpsChange,
         cellSizeCb: handleCellSizeChange,
     })
 
-    const canvas = document.getElementById('main-canvas')
+    const canvas = document.getElementById(CANVAS_ID)
     const ctx = canvas.getContext('2d')
 
     canvas.width = CONFIG.WIDTH
@@ -38,7 +39,6 @@ function init() {
             return
         }
 
-
         now = Date.now()
         delta = now - startTime
 
@@ -61,6 +61,12 @@ function init() {
     function handleResetButtonClick() {
         isRunning = false
         grid = getInitialGrid({rows, cols})
+        renderGrid(ctx, grid, cellSize)
+    }
+
+    function handleNextButtonClick() {
+        isRunning = false
+        grid = getNextGrid(grid)
         renderGrid(ctx, grid, cellSize)
     }
 
