@@ -1,30 +1,95 @@
-console.log('INDEX.JS')
 import CONFIG from './config'
-import { getInitialGrid, renderGrid } from './grid.helper'
+import { getInitialGrid, getNextGrid, renderGrid } from './grid.helper'
+import { addButtonClickHandlers } from './ui.helper'
 
 
 function init() {
-    console.log('init')
+
+    addButtonClickHandlers({
+        startCb: handleStartButtonClick,
+        stopCb: handleStopButtonClick,
+        resetCb: handleResetButtonClick,
+        fpsCb: handleFpsChange,
+        cellSizeCb: handleCellSizeChange,
+    })
 
     const canvas = document.getElementById('main-canvas')
     const ctx = canvas.getContext('2d')
 
-    const COLS = Math.ceil(CONFIG.WIDTH / CONFIG.RESOLUTION)
-    const ROWS = Math.ceil(CONFIG.HEIGHT / CONFIG.RESOLUTION)
-
     canvas.width = CONFIG.WIDTH
     canvas.height = CONFIG.HEIGHT
 
-    const grid = getInitialGrid({rows: ROWS, cols: COLS})
-    loop(ctx, grid, CONFIG.RESOLUTION)
+    let cellSize
+    let cols
+    let rows
+    let grid
 
-    function loop (ctx, grid, resolution) {
-        window.requestAnimationFrame(() => {
-            const grid = getInitialGrid({rows: ROWS, cols: COLS})
-            renderGrid(ctx, grid, resolution)
-            // loop(ctx, grid, resolution)
-        })
+    let isRunning = false
+    let fps
+    let now
+    let startTime = Date.now()
+    let interval
+    let delta
+
+    function loop () {
+        window.requestAnimationFrame(loop)
+
+        if (!isRunning) {
+            return
+        }
+
+
+        now = Date.now()
+        delta = now - startTime
+
+        if (delta > interval) {
+            grid = getNextGrid(grid)
+            renderGrid(ctx, grid, cellSize)
+
+            startTime = now - (delta % interval)
+        }
     }
+
+    function handleStartButtonClick() {
+        isRunning = true
+    }
+
+    function handleStopButtonClick() {
+        isRunning = false
+    }
+
+    function handleResetButtonClick() {
+        isRunning = false
+        grid = getInitialGrid({rows, cols})
+        renderGrid(ctx, grid, cellSize)
+    }
+
+    function handleCellSizeChange(event) {
+        setCellSize(event.currentTarget.value)
+        renderGrid(ctx, grid, cellSize)
+    }
+
+    function handleFpsChange (event) {
+        setFps(event.currentTarget.value)
+    }
+
+    function setFps(newFps = CONFIG.FPS) {
+        fps = newFps
+        interval = 1000 / fps
+    }
+
+    function setCellSize (newCellSize = CONFIG.CELL_SIZE) {
+        cellSize = newCellSize
+        cols = Math.ceil(CONFIG.WIDTH / cellSize)
+        rows = Math.ceil(CONFIG.HEIGHT / cellSize)
+        grid = getInitialGrid({rows, cols})
+    }
+
+    setCellSize()
+    setFps()
+    grid = getInitialGrid({rows, cols})
+    renderGrid(ctx, grid, cellSize)
+    loop(ctx, grid, cellSize)
 }
 
 init()

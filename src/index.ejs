@@ -3,10 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <title>Game of Life</title>
+
+    <style>
+        main {
+            margin: auto;
+        }
+        aside {
+            padding: 1em;
+        }
+        canvas {
+            padding: 1em;
+        }
+    </style>
 </head>
 <body>
-    <h1>Game of Life</h1>
+    <main>
+        <h1>Game of Life</h1>
 
-    <canvas id="main-canvas"></canvas>
+        <aside>
+            <button id="start-button">START</button>
+            <button id="stop-button">STOP</button>
+            <button id="reset-button">RESET</button>
+        </aside>
+
+        <aside>
+            <label>
+                <span>CELL SIZE</span>
+                <input id="cell-size-input" type="number" min="1" max="40" value="10" minlength="1" maxlength="2" size="2" />
+            </label>
+
+            <label>
+                <span>FPS</span>
+                <input id="fps-input" type="number" min="1" max="60" value="5" minlength="1" maxlength="2" size="2" />
+            </label>
+        </aside>
+
+
+        <canvas id="main-canvas"></canvas>
+    </main>
 </body>
 </html>

@@ -1,6 +1,5 @@
-const getRandomLiveOrDeadCell = () => {
-    return Math.round(Math.random())
-}
+import { getCellValue, getRandomLiveOrDeadCell } from './cell.helper'
+
 
 export const getInitialGrid = ({rows, cols}) => {
     let grid = []
@@ -16,23 +15,38 @@ export const getInitialGrid = ({rows, cols}) => {
     return grid
 }
 
-export const renderGrid = (ctx, grid, resolution) => {
+export const getNextGrid = grid => {
+    let newGrid = []
+
+    grid.forEach( (col, colNo) => {
+        const newRow = []
+        col.forEach((row, rowNo) => {
+            const cell = grid[colNo][rowNo]
+            const nearbyLivingCellCount = getNearbyLivingCellCount(grid, colNo, rowNo)
+            const newCell = getCellValue(cell, nearbyLivingCellCount)
+            newRow.push(newCell)
+        })
+        newGrid.push(newRow)
+    })
+
+    return newGrid
+}
+
+export const renderGrid = (ctx, grid, cellSize) => {
+    console.count("renderGrid");
     grid.forEach( (col, colNo) => {
         col.forEach( (row, rowNo) => {
             const cell = grid[colNo][rowNo]
 
-            console.log(getNearbyLivingCellCount(grid, colNo, rowNo))
-
             ctx.beginPath()
             ctx.rect(
-                colNo * resolution,
-                rowNo * resolution,
-                resolution,
-                resolution,
+                colNo * cellSize,
+                rowNo * cellSize,
+                cellSize,
+                cellSize,
             )
             ctx.fillStyle = cell ? 'black' : 'white'
             ctx.fill()
-            ctx.stroke()
         })
     })
 }
