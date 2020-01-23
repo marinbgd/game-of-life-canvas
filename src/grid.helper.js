@@ -4,9 +4,9 @@ import { getCellValue, getRandomLiveOrDeadCell } from './cell.helper'
 export const getInitialGrid = ({rows, cols}) => {
     let grid = []
 
-    for (let i = 0; i < rows; i++) {
+    for (let i = 0; i < rows; i += 1) {
         const row = []
-        for (let j = 0; j < cols; j++) {
+        for (let j = 0; j < cols; j += 1) {
             row.push(getRandomLiveOrDeadCell())
         }
         grid.push(row)
@@ -16,61 +16,60 @@ export const getInitialGrid = ({rows, cols}) => {
 }
 
 export const getNextGrid = grid => {
-    let newGrid = []
+    let newGrid = grid.slice()
 
-    grid.forEach( (row, rowNo) => {
-        const newRow = []
-        row.forEach((col, colNo) => {
-            const cell = grid[rowNo][colNo]
-            const nearbyLivingCellCount = getNearbyLivingCellCount(grid, rowNo, colNo)
-            const newCell = getCellValue(cell, nearbyLivingCellCount)
-            newRow.push(newCell)
-        })
-        newGrid.push(newRow)
-    })
+    const totalRows = grid.length
+    const totalCols = grid[0].length
+
+    for (let i = 0; i < totalRows; i += 1) {
+        const newRow = grid[i].slice()
+        for (let j = 0; j < totalCols; j += 1) {
+            const cell = grid[i][j]
+            const nearbyLivingCellCount = getNearbyLivingCellCount(grid, i, j)
+            newRow[j] = getCellValue(cell, nearbyLivingCellCount)
+        }
+        newGrid[i] = newRow
+    }
 
     return newGrid
 }
 
 export const renderGrid = (ctx, grid, cellSize) => {
-    grid.forEach( (row, rowNo) => {
-        row.forEach( (col, colNo) => {
-            const cell = grid[rowNo][colNo]
+    const totalRows = grid.length
+    const totalCols = grid[0].length
+
+    for (let i = 0; i < totalRows; i += 1) {
+        for (let j = 0; j < totalCols; j += 1) {
+            const cell = grid[i][j]
 
             ctx.beginPath()
-            ctx.rect(
-                colNo * cellSize,
-                rowNo * cellSize,
+            ctx.fillStyle = cell ? 'black' : 'white'
+            ctx.fillRect(
+                i * cellSize,
+                j * cellSize,
                 cellSize,
                 cellSize,
             )
-            ctx.fillStyle = cell ? 'black' : 'white'
-            ctx.fill()
-        })
-    })
+        }
+    }
 }
 
 const getNearbyLivingCellCount = (grid, cellRow, cellCol) => {
     let livingCount = 0
 
-    for (let i = -1; i < 2; i++) {
+    for (let i = -1; i < 2; i += 1) {
         const row = cellRow + i
 
         if (!grid[row]) {
             continue
         }
 
-        for (let j = -1; j < 2; j++) {
-            const col = cellCol + j
-
-            if (
-                row === cellRow
-                && col === cellCol
-            ) {
+        for (let j = -1; j < 2; j += 1) {
+            if ( !i && !j ) {
                 continue
             }
 
-            if (grid[row][col]) {
+            if (grid[row][cellCol + j]) {
                 livingCount += 1
             }
         }
