@@ -19,3 +19,10 @@ Any live cell with two or three neighbors survives.
 Any dead cell with three live neighbors becomes a live cell.
 All other live cells die in the next generation. Similarly, all other dead cells stay dead.
 The initial pattern constitutes the seed of the system. The first generation is created by applying the above rules simultaneously to every cell in the seed; births and deaths occur simultaneously, and the discrete moment at which this happens is sometimes called a tick. Each generation is a pure function of the preceding one. The rules continue to be applied repeatedly to create further generations.
+
+## Usage
+* `npm i` - first, install dependencies
+
+* `npm run build` - build minified project, artifacts are in `/dist` folder
+
+* `npm run dev` - builds and serves project for development on `http://localhost:3000/`

@@ -4,7 +4,7 @@
   "description": "Game of life",
   "main": "main.js",
   "scripts": {
-    "build": "webpack",
+    "build": "webpack --config webpack.config.prod.js",
     "dev": "webpack-dev-server"
   },
   "keywords": [
