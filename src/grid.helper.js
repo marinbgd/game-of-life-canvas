@@ -34,7 +34,15 @@ export const getNextGrid = grid => {
     return newGrid
 }
 
-export const renderGrid = (ctx, grid, cellSize) => {
+export const renderGrid = (ctx, grid, cellSize, width, height) => {
+    if (+cellSize === 1){
+        renderGridPixel(ctx, grid, width, height) // can render pixel by pixel
+    } else {
+        renderGridFill(ctx, grid, cellSize)
+    }
+}
+
+const renderGridFill = (ctx, grid, cellSize) => {
     const totalRows = grid.length
     const totalCols = grid[0].length
 
@@ -42,8 +50,7 @@ export const renderGrid = (ctx, grid, cellSize) => {
         for (let j = 0; j < totalCols; j += 1) {
             const cell = grid[i][j]
 
-            ctx.beginPath()
-            ctx.fillStyle = cell ? 'black' : 'white'
+            ctx.fillStyle = cell ? 'black' : 'yellow'
             ctx.fillRect(
                 i * cellSize,
                 j * cellSize,
@@ -52,6 +59,27 @@ export const renderGrid = (ctx, grid, cellSize) => {
             )
         }
     }
+}
+
+const renderGridPixel = (ctx, grid, width, height) => {
+    const newImage = ctx.createImageData(width, height)
+    const newImageData = newImage.data
+
+    for (let i = 0; i < width; i += 1) {
+        for (let j = 0; j < height; j += 1) {
+            const cell = grid[i][j]
+            const pixelIndex = (j * width + i) * 4;
+
+            // default is 0 for rgba, so set only if need to change, when need white/yellow - to color
+            if (!cell) {
+                newImageData[pixelIndex] = 255;     // Red
+                newImageData[pixelIndex+1] = 255; // Green
+                //newImageData[pixelIndex+2] = 255;  // Blue
+            }
+            newImageData[pixelIndex+3] = 255; //alpha
+        }
+    }
+    ctx.putImageData(newImage, 0, 0)
 }
 
 const getNearbyLivingCellCount = (grid, cellRow, cellCol) => {
