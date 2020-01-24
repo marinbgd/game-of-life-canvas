@@ -7,6 +7,7 @@ import {
     R_PENTOMINO_GRID_ELEMENT,
     ACORN_GRID_ELEMENT,
 } from './patterns.oscilators'
+import { INFINITE_GUN_1 } from './patterns.guns'
 import { addButtonClickHandlers, CANVAS_ID } from './ui.helper'
 
 
@@ -26,6 +27,7 @@ function init() {
         dieHardCb: handleDieHardButtonClick,
         acornCb: handleAcornButtonClick,
         rPentominoCb: handleRPentominoButtonClick,
+        gun1Cb: handleGun1ButtonClick,
     })
 
     const canvas = document.getElementById(CANVAS_ID)
@@ -112,6 +114,10 @@ function init() {
     }
     function handleRPentominoButtonClick () {
         setGridWithPattern(R_PENTOMINO_GRID_ELEMENT)
+    }
+
+    function handleGun1ButtonClick () {
+        setGridWithPattern(INFINITE_GUN_1)
     }
 
     function handleFillChange (event) {

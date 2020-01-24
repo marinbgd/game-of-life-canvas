@@ -10,6 +10,7 @@ const PENTA_DECATHLON_BUTTON_ID = 'penta-decathlon-button'
 const DIE_HARD_BUTTON_ID = 'die-hard-button'
 const R_PENTOMINO_BUTTON_ID = 'r-pentomino-button'
 const ACORN_BUTTON_ID = 'acorn-button'
+const GUN_1_BUTTON_ID = 'gun1-button'
 const FILL_CHECKBOX_ID = 'fill-checkbox'
 export const CANVAS_ID = 'main-canvas'
 
@@ -26,6 +27,7 @@ export const addButtonClickHandlers = ({
                                            dieHardCb,
                                            rPentominoCb,
                                            acornCb,
+                                           gun1Cb,
                                            fillCb,
 }) => {
     document.getElementById(START_BUTTON_ID).addEventListener('click', startCb)
@@ -39,6 +41,8 @@ export const addButtonClickHandlers = ({
     document.getElementById(R_PENTOMINO_BUTTON_ID).addEventListener('click', rPentominoCb)
     document.getElementById(ACORN_BUTTON_ID).addEventListener('click', acornCb)
     document.getElementById(FILL_CHECKBOX_ID).addEventListener('change', fillCb)
+
+    document.getElementById(GUN_1_BUTTON_ID).addEventListener('click', gun1Cb)
 
     document.getElementById(CELL_SIZE_INPUT_ID).addEventListener('change', cellSizeCb)
     document.getElementById(FPS_INPUT_ID).addEventListener('change', fpsCb)
