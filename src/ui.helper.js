@@ -4,19 +4,37 @@ const NEXT_BUTTON_ID = 'next-button'
 const RESET_BUTTON_ID = 'reset-button'
 const CELL_SIZE_INPUT_ID = 'cell-size-input'
 const FPS_INPUT_ID = 'fps-input'
+const FILL_SPACE_BETWEEN_INPUT_ID = 'fill-space-between-input'
 const PULSAR_BUTTON_ID = 'pulsar-button'
-const PENTHA_DECATHLON_BUTTON_ID = 'pentha-decathlon-button'
+const PENTA_DECATHLON_BUTTON_ID = 'penta-decathlon-button'
+const DIE_HARD_BUTTON_ID = 'die-hard-button'
+const FILL_OSCILLATOR_CHECKBOX_ID = 'fill-oscillator-checkbox'
 export const CANVAS_ID = 'main-canvas'
 
-export const addButtonClickHandlers = ({ startCb, stopCb, nextCb, resetCb, cellSizeCb, fpsCb, pulsarCb, penthaDecathlonCb }) => {
+export const addButtonClickHandlers = ({
+                                           startCb,
+                                           stopCb,
+                                           nextCb,
+                                           resetCb,
+                                           cellSizeCb,
+                                           fpsCb,
+                                           pulsarCb,
+                                           fillSpaceCb,
+                                           pentaDecathlonCb,
+                                           dieHardCb,
+                                           fillOscillatorCb,
+}) => {
     document.getElementById(START_BUTTON_ID).addEventListener('click', startCb)
     document.getElementById(STOP_BUTTON_ID).addEventListener('click', stopCb)
     document.getElementById(NEXT_BUTTON_ID).addEventListener('click', nextCb)
     document.getElementById(RESET_BUTTON_ID).addEventListener('click', resetCb)
 
     document.getElementById(PULSAR_BUTTON_ID).addEventListener('click', pulsarCb)
-    document.getElementById(PENTHA_DECATHLON_BUTTON_ID).addEventListener('click', penthaDecathlonCb)
+    document.getElementById(PENTA_DECATHLON_BUTTON_ID).addEventListener('click', pentaDecathlonCb)
+    document.getElementById(DIE_HARD_BUTTON_ID).addEventListener('click', dieHardCb)
+    document.getElementById(FILL_OSCILLATOR_CHECKBOX_ID).addEventListener('change', fillOscillatorCb)
 
     document.getElementById(CELL_SIZE_INPUT_ID).addEventListener('change', cellSizeCb)
     document.getElementById(FPS_INPUT_ID).addEventListener('change', fpsCb)
+    document.getElementById(FILL_SPACE_BETWEEN_INPUT_ID).addEventListener('change', fillSpaceCb)
 }

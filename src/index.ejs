@@ -5,14 +5,21 @@
     <title>Game of Life</title>
 
     <style>
+        h1 {
+            text-align: center;
+        }
         main {
             margin: auto;
         }
         aside {
-            padding: 1em;
+            padding: 0.5em;
         }
         canvas {
-            padding: 1em;
+            padding: 0.5em;
+        }
+
+        .fill-controls label {
+            display: block;
         }
     </style>
 </head>
@@ -27,9 +34,18 @@
             <button id="reset-button">RESET</button>
         </aside>
 
-        <aside>
+        <aside class="fill-controls">
+            <label>
+                <span>Fill board as a pattern:</span>
+                <input id="fill-oscillator-checkbox" type="checkbox" name="fill-oscillator-checkbox" value="false" />
+            </label>
+            <label>
+                <span>Fill space between:</span>
+                <input id="fill-space-between-input" type="number" min="0" max="20" minlength="1" maxlength="2" size="2" value="2" />
+            </label>
             <button id="pulsar-button">PULSAR</button>
-            <button id="pentha-decathlon-button">PENTHA-DECATHLON</button>
+            <button id="penta-decathlon-button">PENTA-DECATHLON</button>
+            <button id="die-hard-button">DIE HARD</button>
         </aside>
 
         <aside>

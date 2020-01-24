@@ -1,6 +1,6 @@
 import CONFIG from './config'
 import { getInitialGrid, getNextGrid, renderGrid, getGridWithOscillator } from './grid.helper'
-import { PULSAR_GRID_ELEMENT, PENTA_DECATHLON_GRID_ELEMENT } from './grids.oscilators'
+import { PULSAR_GRID_ELEMENT, PENTA_DECATHLON_GRID_ELEMENT, DIE_HARD_GRID_ELEMENT } from './grids.oscilators'
 import { addButtonClickHandlers, CANVAS_ID } from './ui.helper'
 
 
@@ -14,7 +14,10 @@ function init() {
         fpsCb: handleFpsChange,
         cellSizeCb: handleCellSizeChange,
         pulsarCb: handlePulsarButtonClick,
-        penthaDecathlonCb: handlePenthaDecathlonButtonClick,
+        pentaDecathlonCb: handlePentaDecathlonButtonClick,
+        fillOscillatorCb: handleFillOscillatorChange,
+        fillSpaceCb: handleFillSpaceBetweenChange,
+        dieHardCb: handleDieHardButtonClick,
     })
 
     const canvas = document.getElementById(CANVAS_ID)
@@ -27,6 +30,8 @@ function init() {
     let cols
     let rows
     let grid
+    let isFillOscillator = false
+    let fillSpaceBetween
 
     let isRunning = false
     let fps
@@ -83,15 +88,23 @@ function init() {
     }
 
     function handlePulsarButtonClick () {
-        isRunning = true
-        grid = getGridWithOscillator(rows, cols, PULSAR_GRID_ELEMENT)
-        renderGrid(canvas, ctx, grid, cellSize, CONFIG.WIDTH, CONFIG.HEIGHT)
+        setGridWithOscillator(PULSAR_GRID_ELEMENT)
     }
 
-    function handlePenthaDecathlonButtonClick () {
-        isRunning = true
-        grid = getGridWithOscillator(rows, cols, PENTA_DECATHLON_GRID_ELEMENT)
-        renderGrid(canvas, ctx, grid, cellSize, CONFIG.WIDTH, CONFIG.HEIGHT)
+    function handlePentaDecathlonButtonClick () {
+        setGridWithOscillator(PENTA_DECATHLON_GRID_ELEMENT)
+    }
+
+    function handleDieHardButtonClick () {
+        setGridWithOscillator(DIE_HARD_GRID_ELEMENT)
+    }
+
+    function handleFillOscillatorChange (event) {
+        isFillOscillator = event.currentTarget.checked
+    }
+
+    function handleFillSpaceBetweenChange (event) {
+        fillSpaceBetween = event.currentTarget.value
     }
 
     function setFps(newFps = CONFIG.FPS) {
@@ -101,9 +114,15 @@ function init() {
 
     function setCellSize (newCellSize = CONFIG.CELL_SIZE) {
         cellSize = newCellSize
-        cols = Math.ceil(CONFIG.WIDTH / cellSize)
-        rows = Math.ceil(CONFIG.HEIGHT / cellSize)
+        cols = Math.floor(CONFIG.WIDTH / cellSize)
+        rows = Math.floor(CONFIG.HEIGHT / cellSize)
         grid = getInitialGrid({rows, cols})
+    }
+
+    function setGridWithOscillator (oscillator) {
+        isRunning = false
+        grid = getGridWithOscillator(rows, cols, oscillator, isFillOscillator, fillSpaceBetween)
+        renderGrid(canvas, ctx, grid, cellSize, CONFIG.WIDTH, CONFIG.HEIGHT)
     }
 
     setCellSize()

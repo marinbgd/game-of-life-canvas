@@ -37,8 +37,8 @@ export const getNextGrid = grid => {
 
 
 export const renderGrid = (canvas, ctx, grid, cellSize, width, height) => {
-    const imageWidth = Math.ceil(width / cellSize)
-    const imageHeight = Math.ceil(height / cellSize)
+    const imageWidth = Math.floor(width / cellSize)
+    const imageHeight = Math.floor(height / cellSize)
     const newImage = ctx.createImageData(imageWidth, imageHeight)
     const newImageData = newImage.data
 
@@ -119,7 +119,7 @@ const getNearbyLivingCellCount = (grid, cellRow, cellCol) => {
 }
 
 
-export const getGridWithOscillator = (rows, cols, oscillator) => {
+export const getGridWithOscillator = (rows, cols, oscillator, isFill = false, fillSpaceBetween = 2) => {
 
     //check if grid can support oscillator width and height
     const oscillatorRows = oscillator.length
@@ -131,16 +131,55 @@ export const getGridWithOscillator = (rows, cols, oscillator) => {
         throw Error('Oscillator too big for this grid')
     }
 
+    let grid = _getEmptyGrid(rows, cols)
+
+    if (!isFill) {
+        _addShapeToGrid(grid, oscillator, 0, 0) // adds only 1 element
+        return grid
+    }
+
+    //calc how many oscillators can fit into the grid
+    const oscillatorColsWithSpace = oscillatorCols + +fillSpaceBetween
+    const oscillatorRowsWithSpace = oscillatorRows + +fillSpaceBetween
+    const oscillatorFitsInColsCount = Math.floor(cols / oscillatorColsWithSpace)
+    const oscillatorFitsInRowsCount = Math.floor(rows / oscillatorRowsWithSpace)
+
+    for (let i = 0; i < oscillatorFitsInColsCount; i += 1) {
+        for (let j = 0; j < oscillatorFitsInRowsCount; j += 1) {
+            let x = j * oscillatorRowsWithSpace
+            let y = i * oscillatorColsWithSpace
+            _addShapeToGrid(grid, oscillator, x, y)
+        }
+    }
+    return grid
+}
+
+/**
+ * Mutates grid !
+ * @param grid
+ * @param shape
+ * @param x
+ * @param y
+ * @private
+ */
+const _addShapeToGrid = (grid, shape, x, y) => {
+    const shapeRows = shape.length
+    const shapeCols = shape[0].length
+
+    for (let i = 0; i < shapeCols; i += 1) {
+        for (let j = 0; j < shapeRows; j += 1) {
+            grid[j+x][i+y] = shape[j][i]
+        }
+    }
+}
+
+const _getEmptyGrid = (rows, cols) => {
     let grid = []
 
-    for (let i = 0; i < rows; i += 1) {
+    for (let i = 0; i < cols; i += 1) {
         const row = []
-        for (let j = 0; j < cols; j += 1) {
-            if (oscillator[i] && oscillator[i][j]) {
-                row.push(!!oscillator[i][j])
-            } else {
-                row.push(false)
-            }
+        for (let j = 0; j < rows; j += 1) {
+            row.push(false)
         }
         grid.push(row)
     }
