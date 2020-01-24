@@ -1,6 +1,12 @@
 import CONFIG from './config'
 import { getInitialGrid, getNextGrid, renderGrid, getGridWithOscillator } from './grid.helper'
-import { PULSAR_GRID_ELEMENT, PENTA_DECATHLON_GRID_ELEMENT, DIE_HARD_GRID_ELEMENT } from './grids.oscilators'
+import {
+    PULSAR_GRID_ELEMENT,
+    PENTA_DECATHLON_GRID_ELEMENT,
+    DIE_HARD_GRID_ELEMENT,
+    R_PENTOMINO_GRID_ELEMENT,
+    ACORN_GRID_ELEMENT,
+} from './grids.oscilators'
 import { addButtonClickHandlers, CANVAS_ID } from './ui.helper'
 
 
@@ -18,6 +24,8 @@ function init() {
         fillOscillatorCb: handleFillOscillatorChange,
         fillSpaceCb: handleFillSpaceBetweenChange,
         dieHardCb: handleDieHardButtonClick,
+        acornCb: handleAcornButtonClick,
+        rPentominoCb: handleRPentominoButtonClick,
     })
 
     const canvas = document.getElementById(CANVAS_ID)
@@ -97,6 +105,13 @@ function init() {
 
     function handleDieHardButtonClick () {
         setGridWithOscillator(DIE_HARD_GRID_ELEMENT)
+    }
+
+    function handleAcornButtonClick () {
+        setGridWithOscillator(ACORN_GRID_ELEMENT)
+    }
+    function handleRPentominoButtonClick () {
+        setGridWithOscillator(R_PENTOMINO_GRID_ELEMENT)
     }
 
     function handleFillOscillatorChange (event) {

@@ -8,6 +8,8 @@ const FILL_SPACE_BETWEEN_INPUT_ID = 'fill-space-between-input'
 const PULSAR_BUTTON_ID = 'pulsar-button'
 const PENTA_DECATHLON_BUTTON_ID = 'penta-decathlon-button'
 const DIE_HARD_BUTTON_ID = 'die-hard-button'
+const R_PENTOMINO_BUTTON_ID = 'r-pentomino-button'
+const ACORN_BUTTON_ID = 'acorn-button'
 const FILL_OSCILLATOR_CHECKBOX_ID = 'fill-oscillator-checkbox'
 export const CANVAS_ID = 'main-canvas'
 
@@ -22,6 +24,8 @@ export const addButtonClickHandlers = ({
                                            fillSpaceCb,
                                            pentaDecathlonCb,
                                            dieHardCb,
+                                           rPentominoCb,
+                                           acornCb,
                                            fillOscillatorCb,
 }) => {
     document.getElementById(START_BUTTON_ID).addEventListener('click', startCb)
@@ -32,6 +36,8 @@ export const addButtonClickHandlers = ({
     document.getElementById(PULSAR_BUTTON_ID).addEventListener('click', pulsarCb)
     document.getElementById(PENTA_DECATHLON_BUTTON_ID).addEventListener('click', pentaDecathlonCb)
     document.getElementById(DIE_HARD_BUTTON_ID).addEventListener('click', dieHardCb)
+    document.getElementById(R_PENTOMINO_BUTTON_ID).addEventListener('click', rPentominoCb)
+    document.getElementById(ACORN_BUTTON_ID).addEventListener('click', acornCb)
     document.getElementById(FILL_OSCILLATOR_CHECKBOX_ID).addEventListener('change', fillOscillatorCb)
 
     document.getElementById(CELL_SIZE_INPUT_ID).addEventListener('change', cellSizeCb)
