@@ -1,12 +1,12 @@
 import CONFIG from './config'
-import { getInitialGrid, getNextGrid, renderGrid, getGridWithOscillator } from './grid.helper'
+import { getInitialGrid, getNextGrid, renderGrid, getGridWithPattern } from './grid.helper'
 import {
     PULSAR_GRID_ELEMENT,
     PENTA_DECATHLON_GRID_ELEMENT,
     DIE_HARD_GRID_ELEMENT,
     R_PENTOMINO_GRID_ELEMENT,
     ACORN_GRID_ELEMENT,
-} from './grids.oscilators'
+} from './patterns.oscilators'
 import { addButtonClickHandlers, CANVAS_ID } from './ui.helper'
 
 
@@ -21,7 +21,7 @@ function init() {
         cellSizeCb: handleCellSizeChange,
         pulsarCb: handlePulsarButtonClick,
         pentaDecathlonCb: handlePentaDecathlonButtonClick,
-        fillOscillatorCb: handleFillOscillatorChange,
+        fillCb: handleFillChange,
         fillSpaceCb: handleFillSpaceBetweenChange,
         dieHardCb: handleDieHardButtonClick,
         acornCb: handleAcornButtonClick,
@@ -38,7 +38,7 @@ function init() {
     let cols
     let rows
     let grid
-    let isFillOscillator = false
+    let isFill = false
     let fillSpaceBetween
 
     let isRunning = false
@@ -96,26 +96,26 @@ function init() {
     }
 
     function handlePulsarButtonClick () {
-        setGridWithOscillator(PULSAR_GRID_ELEMENT)
+        setGridWithPattern(PULSAR_GRID_ELEMENT)
     }
 
     function handlePentaDecathlonButtonClick () {
-        setGridWithOscillator(PENTA_DECATHLON_GRID_ELEMENT)
+        setGridWithPattern(PENTA_DECATHLON_GRID_ELEMENT)
     }
 
     function handleDieHardButtonClick () {
-        setGridWithOscillator(DIE_HARD_GRID_ELEMENT)
+        setGridWithPattern(DIE_HARD_GRID_ELEMENT)
     }
 
     function handleAcornButtonClick () {
-        setGridWithOscillator(ACORN_GRID_ELEMENT)
+        setGridWithPattern(ACORN_GRID_ELEMENT)
     }
     function handleRPentominoButtonClick () {
-        setGridWithOscillator(R_PENTOMINO_GRID_ELEMENT)
+        setGridWithPattern(R_PENTOMINO_GRID_ELEMENT)
     }
 
-    function handleFillOscillatorChange (event) {
-        isFillOscillator = event.currentTarget.checked
+    function handleFillChange (event) {
+        isFill = event.currentTarget.checked
     }
 
     function handleFillSpaceBetweenChange (event) {
@@ -134,9 +134,9 @@ function init() {
         grid = getInitialGrid({rows, cols})
     }
 
-    function setGridWithOscillator (oscillator) {
+    function setGridWithPattern (pattern) {
         isRunning = false
-        grid = getGridWithOscillator(rows, cols, oscillator, isFillOscillator, fillSpaceBetween)
+        grid = getGridWithPattern(rows, cols, pattern, isFill, fillSpaceBetween)
         renderGrid(canvas, ctx, grid, cellSize, CONFIG.WIDTH, CONFIG.HEIGHT)
     }
 

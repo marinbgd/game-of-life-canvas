@@ -10,7 +10,7 @@ const PENTA_DECATHLON_BUTTON_ID = 'penta-decathlon-button'
 const DIE_HARD_BUTTON_ID = 'die-hard-button'
 const R_PENTOMINO_BUTTON_ID = 'r-pentomino-button'
 const ACORN_BUTTON_ID = 'acorn-button'
-const FILL_OSCILLATOR_CHECKBOX_ID = 'fill-oscillator-checkbox'
+const FILL_CHECKBOX_ID = 'fill-checkbox'
 export const CANVAS_ID = 'main-canvas'
 
 export const addButtonClickHandlers = ({
@@ -26,7 +26,7 @@ export const addButtonClickHandlers = ({
                                            dieHardCb,
                                            rPentominoCb,
                                            acornCb,
-                                           fillOscillatorCb,
+                                           fillCb,
 }) => {
     document.getElementById(START_BUTTON_ID).addEventListener('click', startCb)
     document.getElementById(STOP_BUTTON_ID).addEventListener('click', stopCb)
@@ -38,7 +38,7 @@ export const addButtonClickHandlers = ({
     document.getElementById(DIE_HARD_BUTTON_ID).addEventListener('click', dieHardCb)
     document.getElementById(R_PENTOMINO_BUTTON_ID).addEventListener('click', rPentominoCb)
     document.getElementById(ACORN_BUTTON_ID).addEventListener('click', acornCb)
-    document.getElementById(FILL_OSCILLATOR_CHECKBOX_ID).addEventListener('change', fillOscillatorCb)
+    document.getElementById(FILL_CHECKBOX_ID).addEventListener('change', fillCb)
 
     document.getElementById(CELL_SIZE_INPUT_ID).addEventListener('change', cellSizeCb)
     document.getElementById(FPS_INPUT_ID).addEventListener('change', fpsCb)

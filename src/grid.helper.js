@@ -119,14 +119,14 @@ const getNearbyLivingCellCount = (grid, cellRow, cellCol) => {
 }
 
 
-export const getGridWithOscillator = (rows, cols, oscillator, isFill = false, fillSpaceBetween = 2) => {
+export const getGridWithPattern = (rows, cols, pattern, isFill = false, fillSpaceBetween = 2) => {
 
-    //check if grid can support oscillator width and height
-    const oscillatorRows = oscillator.length
-    const oscillatorCols = oscillator[0].length
+    //check if grid can support pattern width and height
+    const patternCols = pattern.length
+    const patternRows = pattern[0].length
     if (
-        rows < oscillatorRows
-        || cols < oscillatorCols
+        rows < patternRows
+        || cols < patternCols
     ) {
         throw Error('Oscillator too big for this grid')
     }
@@ -134,21 +134,21 @@ export const getGridWithOscillator = (rows, cols, oscillator, isFill = false, fi
     let grid = _getEmptyGrid(rows, cols)
 
     if (!isFill) {
-        _addShapeToGrid(grid, oscillator, 0, 0) // adds only 1 element
+        _addShapeToGrid(grid, pattern, 0, 0) // adds only 1 element
         return grid
     }
 
     //calc how many oscillators can fit into the grid
-    const oscillatorColsWithSpace = oscillatorCols + +fillSpaceBetween
-    const oscillatorRowsWithSpace = oscillatorRows + +fillSpaceBetween
-    const oscillatorFitsInColsCount = Math.floor(cols / oscillatorColsWithSpace)
-    const oscillatorFitsInRowsCount = Math.floor(rows / oscillatorRowsWithSpace)
+    const patternColsWithSpace = patternCols + +fillSpaceBetween
+    const patternRowsWithSpace = patternRows + +fillSpaceBetween
+    const patternFitsInColsCount = Math.floor(cols / patternColsWithSpace)
+    const patternFitsInRowsCount = Math.floor(rows / patternRowsWithSpace)
 
-    for (let i = 0; i < oscillatorFitsInColsCount; i += 1) {
-        for (let j = 0; j < oscillatorFitsInRowsCount; j += 1) {
-            let x = j * oscillatorRowsWithSpace
-            let y = i * oscillatorColsWithSpace
-            _addShapeToGrid(grid, oscillator, x, y)
+    for (let i = 0; i < patternFitsInColsCount; i += 1) {
+        for (let j = 0; j < patternFitsInRowsCount; j += 1) {
+            let x = j * patternRowsWithSpace
+            let y = i * patternColsWithSpace
+            _addShapeToGrid(grid, pattern, x, y)
         }
     }
     return grid
