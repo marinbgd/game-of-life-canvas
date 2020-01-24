@@ -12,25 +12,19 @@
  All other live cells die in the next generation. Similarly, all other dead cells stay dead.
  * @param cellValue
  * @param surroundingLiveCellCount
- * @returns {number|*}
+ * @returns {boolean}
  */
 
 export const getCellValue = (cellValue, surroundingLiveCellCount) => {
-    if (cellValue) {
-        if (surroundingLiveCellCount === 2 || surroundingLiveCellCount === 3) {
-            return 1
-        } else {
-            return 0
-        }
+    if (surroundingLiveCellCount === 3) {
+        return true
+    } else if (cellValue && surroundingLiveCellCount === 2) {
+        return true
     } else {
-        if (surroundingLiveCellCount === 3) {
-            return 1
-        } else {
-            return 0
-        }
+        return false
     }
 }
 
 export const getRandomLiveOrDeadCell = () => {
-    return Math.round(Math.random())
+    return !!Math.round(Math.random())
 }
