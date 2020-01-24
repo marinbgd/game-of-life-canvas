@@ -1,5 +1,6 @@
 import CONFIG from './config'
-import { getInitialGrid, getNextGrid, renderGrid } from './grid.helper'
+import { getInitialGrid, getNextGrid, renderGrid, getGridWithOscillator } from './grid.helper'
+import { PULSAR_GRID_ELEMENT, PENTA_DECATHLON_GRID_ELEMENT } from './grids.oscilators'
 import { addButtonClickHandlers, CANVAS_ID } from './ui.helper'
 
 
@@ -12,6 +13,8 @@ function init() {
         resetCb: handleResetButtonClick,
         fpsCb: handleFpsChange,
         cellSizeCb: handleCellSizeChange,
+        pulsarCb: handlePulsarButtonClick,
+        penthaDecathlonCb: handlePenthaDecathlonButtonClick,
     })
 
     const canvas = document.getElementById(CANVAS_ID)
@@ -77,6 +80,18 @@ function init() {
 
     function handleFpsChange (event) {
         setFps(event.currentTarget.value)
+    }
+
+    function handlePulsarButtonClick () {
+        isRunning = true
+        grid = getGridWithOscillator(rows, cols, PULSAR_GRID_ELEMENT)
+        renderGrid(canvas, ctx, grid, cellSize, CONFIG.WIDTH, CONFIG.HEIGHT)
+    }
+
+    function handlePenthaDecathlonButtonClick () {
+        isRunning = true
+        grid = getGridWithOscillator(rows, cols, PENTA_DECATHLON_GRID_ELEMENT)
+        renderGrid(canvas, ctx, grid, cellSize, CONFIG.WIDTH, CONFIG.HEIGHT)
     }
 
     function setFps(newFps = CONFIG.FPS) {

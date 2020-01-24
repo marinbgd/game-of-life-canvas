@@ -44,7 +44,7 @@ export const renderGrid = (canvas, ctx, grid, cellSize, width, height) => {
 
     for (let i = 0; i < imageWidth; i += 1) {
         for (let j = 0; j < imageHeight; j += 1) {
-            const cell = grid[i][j]
+            const cell = grid[j][i]
             const pixelIndex = (j * imageWidth + i) * 4;
 
             // default is 0 for rgba, so set only if need to change, when need white/yellow - to color
@@ -116,4 +116,34 @@ const getNearbyLivingCellCount = (grid, cellRow, cellCol) => {
     }
 
     return livingCount
+}
+
+
+export const getGridWithOscillator = (rows, cols, oscillator) => {
+
+    //check if grid can support oscillator width and height
+    const oscillatorRows = oscillator.length
+    const oscillatorCols = oscillator[0].length
+    if (
+        rows < oscillatorRows
+        || cols < oscillatorCols
+    ) {
+        throw Error('Oscillator too big for this grid')
+    }
+
+    let grid = []
+
+    for (let i = 0; i < rows; i += 1) {
+        const row = []
+        for (let j = 0; j < cols; j += 1) {
+            if (oscillator[i] && oscillator[i][j]) {
+                row.push(!!oscillator[i][j])
+            } else {
+                row.push(false)
+            }
+        }
+        grid.push(row)
+    }
+
+    return grid
 }
