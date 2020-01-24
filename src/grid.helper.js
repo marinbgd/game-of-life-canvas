@@ -122,8 +122,8 @@ const getNearbyLivingCellCount = (grid, cellRow, cellCol) => {
 export const getGridWithPattern = (rows, cols, pattern, isFill = false, fillSpaceBetween = 2) => {
 
     //check if grid can support pattern width and height
-    const patternCols = pattern.length
-    const patternRows = pattern[0].length
+    const patternRows = pattern.length
+    const patternCols = pattern[0].length
     if (
         rows < patternRows
         || cols < patternCols
@@ -146,8 +146,8 @@ export const getGridWithPattern = (rows, cols, pattern, isFill = false, fillSpac
 
     for (let i = 0; i < patternFitsInColsCount; i += 1) {
         for (let j = 0; j < patternFitsInRowsCount; j += 1) {
-            let x = j * patternRowsWithSpace
             let y = i * patternColsWithSpace
+            let x = j * patternRowsWithSpace
             _addShapeToGrid(grid, pattern, x, y)
         }
     }
