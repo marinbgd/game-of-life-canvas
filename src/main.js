@@ -44,7 +44,7 @@ function init() {
 
         if (delta > interval) {
             grid = getNextGrid(grid)
-            renderGrid(ctx, grid, cellSize, CONFIG.WIDTH, CONFIG.HEIGHT)
+            renderGrid(canvas, ctx, grid, cellSize, CONFIG.WIDTH, CONFIG.HEIGHT)
 
             startTime = now - (delta % interval)
         }
@@ -61,18 +61,18 @@ function init() {
     function handleResetButtonClick() {
         isRunning = false
         grid = getInitialGrid({rows, cols})
-        renderGrid(ctx, grid, cellSize, CONFIG.WIDTH, CONFIG.HEIGHT)
+        renderGrid(canvas, ctx, grid, cellSize, CONFIG.WIDTH, CONFIG.HEIGHT)
     }
 
     function handleNextButtonClick() {
         isRunning = false
         grid = getNextGrid(grid)
-        renderGrid(ctx, grid, cellSize, CONFIG.WIDTH, CONFIG.HEIGHT)
+        renderGrid(canvas, ctx, grid, cellSize, CONFIG.WIDTH, CONFIG.HEIGHT)
     }
 
     function handleCellSizeChange(event) {
         setCellSize(event.currentTarget.value)
-        renderGrid(ctx, grid, cellSize, CONFIG.WIDTH, CONFIG.HEIGHT)
+        renderGrid(canvas, ctx, grid, cellSize, CONFIG.WIDTH, CONFIG.HEIGHT)
     }
 
     function handleFpsChange (event) {
@@ -94,8 +94,8 @@ function init() {
     setCellSize()
     setFps()
     grid = getInitialGrid({rows, cols})
-    renderGrid(ctx, grid, cellSize, CONFIG.WIDTH, CONFIG.HEIGHT)
-    loop(ctx, grid, cellSize)
+    renderGrid(canvas, ctx, grid, cellSize, CONFIG.WIDTH, CONFIG.HEIGHT)
+    loop()
 }
 
 init()
