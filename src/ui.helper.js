@@ -11,6 +11,7 @@ const DIE_HARD_BUTTON_ID = 'die-hard-button'
 const R_PENTOMINO_BUTTON_ID = 'r-pentomino-button'
 const ACORN_BUTTON_ID = 'acorn-button'
 const GUN_1_BUTTON_ID = 'gun1-button'
+const PUFFER_TRAIN_1_BUTTON_ID = 'puffer-train-1-button'
 const FILL_CHECKBOX_ID = 'fill-checkbox'
 export const CANVAS_ID = 'main-canvas'
 
@@ -28,6 +29,7 @@ export const addButtonClickHandlers = ({
                                            rPentominoCb,
                                            acornCb,
                                            gun1Cb,
+                                           pufferTrain1Cb,
                                            fillCb,
 }) => {
     document.getElementById(START_BUTTON_ID).addEventListener('click', startCb)
@@ -43,6 +45,7 @@ export const addButtonClickHandlers = ({
     document.getElementById(FILL_CHECKBOX_ID).addEventListener('change', fillCb)
 
     document.getElementById(GUN_1_BUTTON_ID).addEventListener('click', gun1Cb)
+    document.getElementById(PUFFER_TRAIN_1_BUTTON_ID).addEventListener('click', pufferTrain1Cb)
 
     document.getElementById(CELL_SIZE_INPUT_ID).addEventListener('change', cellSizeCb)
     document.getElementById(FPS_INPUT_ID).addEventListener('change', fpsCb)
