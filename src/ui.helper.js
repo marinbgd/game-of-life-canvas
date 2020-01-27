@@ -13,6 +13,7 @@ const ACORN_BUTTON_ID = 'acorn-button'
 const GUN_1_BUTTON_ID = 'gun1-button'
 const PUFFER_TRAIN_1_BUTTON_ID = 'puffer-train-1-button'
 const FILL_CHECKBOX_ID = 'fill-checkbox'
+const CENTERED_CHECKBOX_ID = 'centered-checkbox'
 export const CANVAS_ID = 'main-canvas'
 
 export const addButtonClickHandlers = ({
@@ -31,6 +32,7 @@ export const addButtonClickHandlers = ({
                                            gun1Cb,
                                            pufferTrain1Cb,
                                            fillCb,
+                                           centeredCb,
 }) => {
     document.getElementById(START_BUTTON_ID).addEventListener('click', startCb)
     document.getElementById(STOP_BUTTON_ID).addEventListener('click', stopCb)
@@ -43,6 +45,7 @@ export const addButtonClickHandlers = ({
     document.getElementById(R_PENTOMINO_BUTTON_ID).addEventListener('click', rPentominoCb)
     document.getElementById(ACORN_BUTTON_ID).addEventListener('click', acornCb)
     document.getElementById(FILL_CHECKBOX_ID).addEventListener('change', fillCb)
+    document.getElementById(CENTERED_CHECKBOX_ID).addEventListener('change', centeredCb)
 
     document.getElementById(GUN_1_BUTTON_ID).addEventListener('click', gun1Cb)
     document.getElementById(PUFFER_TRAIN_1_BUTTON_ID).addEventListener('click', pufferTrain1Cb)

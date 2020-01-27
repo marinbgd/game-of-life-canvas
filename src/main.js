@@ -29,6 +29,7 @@ function init() {
         rPentominoCb: handleRPentominoButtonClick,
         gun1Cb: handleGun1ButtonClick,
         pufferTrain1Cb: handlePufferTrain1ButtonClick,
+        centeredCb: handleCenteredChange,
     })
 
     const canvas = document.getElementById(CANVAS_ID)
@@ -42,6 +43,7 @@ function init() {
     let rows
     let grid
     let isFill = false
+    let isCentered = true
     let fillSpaceBetween
 
     let isRunning = false
@@ -129,6 +131,10 @@ function init() {
         isFill = event.currentTarget.checked
     }
 
+    function handleCenteredChange (event) {
+        isCentered = event.currentTarget.checked
+    }
+
     function handleFillSpaceBetweenChange (event) {
         fillSpaceBetween = event.currentTarget.value
     }
@@ -147,7 +153,7 @@ function init() {
 
     function setGridWithPattern (pattern) {
         isRunning = false
-        grid = getGridWithPattern(rows, cols, pattern, isFill, fillSpaceBetween)
+        grid = getGridWithPattern(rows, cols, pattern, isFill, fillSpaceBetween, isCentered)
         renderGrid(canvas, ctx, grid, cellSize, CONFIG.WIDTH, CONFIG.HEIGHT)
     }
 

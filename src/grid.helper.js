@@ -119,7 +119,7 @@ const getNearbyLivingCellCount = (grid, cellRow, cellCol) => {
 }
 
 
-export const getGridWithPattern = (rows, cols, pattern, isFill = false, fillSpaceBetween = 2) => {
+export const getGridWithPattern = (rows, cols, pattern, isFill = false, fillSpaceBetween = 2, isCentered = false) => {
 
     //check if grid can support pattern width and height
     const patternRows = pattern.length
@@ -128,13 +128,20 @@ export const getGridWithPattern = (rows, cols, pattern, isFill = false, fillSpac
         rows < patternRows
         || cols < patternCols
     ) {
-        throw Error('Oscillator too big for this grid')
+        throw Error('Pattern too big for this grid')
     }
 
     let grid = _getEmptyGrid(rows, cols)
 
-    if (!isFill) {
-        _addShapeToGrid(grid, pattern, 0, 0) // adds only 1 element
+    if (!isFill) {  // adds only 1 element
+        if (isCentered) {
+            const x = Math.floor((rows/2)-(patternRows/2))
+            const y = Math.floor((cols/2)-(patternCols/2))
+            _addShapeToGrid(grid, pattern, x, y)
+
+        } else {
+            _addShapeToGrid(grid, pattern, 0, 0)
+        }
         return grid
     }
 
@@ -144,10 +151,18 @@ export const getGridWithPattern = (rows, cols, pattern, isFill = false, fillSpac
     const patternFitsInColsCount = Math.floor(cols / patternColsWithSpace)
     const patternFitsInRowsCount = Math.floor(rows / patternRowsWithSpace)
 
+
+    let initialX = 0
+    let initialY = 0
+    if (isCentered) {
+        initialX = Math.floor((cols - (patternColsWithSpace * patternFitsInColsCount)) / 2)
+        initialY = Math.floor((rows - (patternRowsWithSpace * patternFitsInRowsCount)) / 2)
+    }
+
     for (let i = 0; i < patternFitsInColsCount; i += 1) {
         for (let j = 0; j < patternFitsInRowsCount; j += 1) {
-            let y = i * patternColsWithSpace
-            let x = j * patternRowsWithSpace
+            const x = (j * patternRowsWithSpace) + initialX
+            const y = (i * patternColsWithSpace) + initialY
             _addShapeToGrid(grid, pattern, x, y)
         }
     }
